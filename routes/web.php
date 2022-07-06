@@ -23,4 +23,16 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Category
 Route::resource('/category','App\Http\Controllers\CategoryController');
+//brand
+Route::resource('brand', 'App\Http\Controllers\BrandController');
+//cars
+Route::resource('/car','App\Http\Controllers\CarsController');
+
+Route::get('/file-manager',function(){
+    return view('layouts.file-manager');
+})->name('file-manager');
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
 
