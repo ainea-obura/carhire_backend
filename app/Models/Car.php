@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Car extends Model
 {
     use HasFactory;
-    protected $fillable=['title','slug','summary','description','cat_id','child_cat_id','price','brand_id','discount','status','photo','is_featured',];
+    //protected $fillable=['title','slug','summary','description','cat_id','child_cat_id','price','brand_id','discount','status','is_featured',];
+
+    protected $guarded =[];
+    public function images(){
+        return $this->hasMany(Image::class);
+    }
 
     public function cat_info(){
         return $this->hasOne('App\Models\Car','id','cat_id');
@@ -16,9 +21,11 @@ class Car extends Model
     public function sub_cat_info(){
         return $this->hasOne('App\Models\Car','id','child_cat_id');
     }
+
     public static function getAllProduct(){
         return Car::with(['cat_info','sub_cat_info'])->orderBy('id','desc')->paginate(10);
     }
+
     public function rel_prods(){
         return $this->hasMany('App\Models\Product','cat_id','cat_id')->where('status','active')->orderBy('id','DESC')->limit(8);
     }
