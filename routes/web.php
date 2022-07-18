@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CarsController;
+use App\Http\Controllers\UsersController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +18,11 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/image', function () {
+    return view('car.images');
+});
+
+
 
 Auth::routes();
 
@@ -27,6 +34,13 @@ Route::resource('/category','App\Http\Controllers\CategoryController');
 Route::resource('brand', 'App\Http\Controllers\BrandController');
 //cars
 Route::resource('/car','App\Http\Controllers\CarsController');
+
+//Route::post('/add-car',[CarsController::class,'store']);
+Route::get('/car-images/{id}',[CarsController::class,'images'])->name('car.images');
+
+//users
+Route::resource('users','App\Http\Controllers\UsersController');
+
 
 Route::get('/file-manager',function(){
     return view('layouts.file-manager');

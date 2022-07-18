@@ -3,174 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 use App\Models\Car;
 use App\Models\Category;
 use App\Models\Brand;
+use App\Models\Image;
 
 class CarsController extends Controller
 {
-    public function index()
-    {
-        $products=Car::getAllProduct();
-        // return $products;
-        return view('car.index')->with('products',$products);
+    public function index(){
+        $products = Car::getAllCar();
+        return view('car.index',compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        $products = Car::all();
         $brand=Brand::get();
-        $category=Category::where('is_parent',1)->get();
+        $category=Category::get();
+        return view('car.create',compact('products'))->with('categories',$category)->with('brands',$brand);;
+        //$brand=Brand::get();
+        //$category=Category::where('is_parent',1)->get();
         // return $category;
-        return view('car.create')->with('categories',$category)->with('brands',$brand);
+        //return view('car.create')->with('categories',$category)->with('brands',$brand);
+
     }
 
-    
-    public function store(Request $request)
-    {
-        // return $request->all();
-        $this->validate($request,[
-            'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|required',
-            'size'=>'nullable',
-            'stock'=>"required|numeric",
+    public function store(Request $req){
+        $data = $req->validate([
+            'title'=>'required',
             'cat_id'=>'required|exists:categories,id',
             'brand_id'=>'nullable|exists:brands,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
+            'price'=>'required',
+            'summary'=>'string|required',
+            'description'=>'string|nullable',
             'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
-            'price'=>'required|numeric',
-            'discount'=>'nullable|numeric'
         ]);
-
-        $data=$request->all();
-        $slug=Str::slug($request->title);
-        $count=Product::where('slug',$slug)->count();
+        $slug=Str::slug($req->title);
+        $count=Car::where('slug',$slug)->count();
         if($count>0){
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
-        $data['is_featured']=$request->input('is_featured',0);
-        $size=$request->input('size');
-        if($size){
-            $data['size']=implode(',',$size);
+        $new_product = Car::create($data);
+        if($req->has('images')){
+            foreach($req->file('images')as $image){
+                $imageName = $data['title'].'-image-'.time().rand(1,1000).'.'.$image->extension();
+                $image->move(public_path('product_images'),$imageName);
+                Image::create([
+                    'car_id'=>$new_product->id,
+                    'image'=>$imageName
+                ]);
+            }
         }
-        else{
-            $data['size']='';
-        }
-        // return $size;
-        // return $data;
-        $status=Product::create($data);
-        if($status){
-            request()->session()->flash('success','Product Successfully added');
-        }
-        else{
-            request()->session()->flash('error','Please try again!!');
-        }
-        return redirect()->route('car.index');
-
+        return back()->with('success','Added');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $brand=Brand::get();
-        $product=Car::findOrFail($id);
-        $category=Category::where('is_parent',1)->get();
-        $items=Product::where('id',$id)->get();
-        // return $items;
-        return view('car.edit')->with('product',$product)
-                    ->with('brands',$brand)
-                    ->with('categories',$category)->with('items',$items);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $product=Product::findOrFail($id);
-        $this->validate($request,[
-            'title'=>'string|required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
-            'photo'=>'string|required',
-            'size'=>'nullable',
-            'stock'=>"required|numeric",
-            'cat_id'=>'required|exists:categories,id',
-            'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
-            'brand_id'=>'nullable|exists:brands,id',
-            'status'=>'required|in:active,inactive',
-            'condition'=>'required|in:default,new,hot',
-            'price'=>'required|numeric',
-            'discount'=>'nullable|numeric'
-        ]);
-
-        $data=$request->all();
-        $data['is_featured']=$request->input('is_featured',0);
-        $size=$request->input('size');
-        if($size){
-            $data['size']=implode(',',$size);
-        }
-        else{
-            $data['size']='';
-        }
-        // return $data;
-        $status=$product->fill($data)->save();
-        if($status){
-            request()->session()->flash('success','Product Successfully updated');
-        }
-        else{
-            request()->session()->flash('error','Please try again!!');
-        }
-        return redirect()->route('car.index');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $product=Product::findOrFail($id);
-        $status=$product->delete();
-        
-        if($status){
-            request()->session()->flash('success','Product successfully deleted');
-        }
-        else{
-            request()->session()->flash('error','Error while deleting product');
-        }
-        return redirect()->route('car.index');
+    public function images($id){
+        $product = Car::find($id);
+        if(!$product) abort(404);
+        $images = $product->images;
+        return view('car.images',compact('product','images'));
     }
 }
