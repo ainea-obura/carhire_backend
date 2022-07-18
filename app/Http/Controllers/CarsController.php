@@ -13,14 +13,16 @@ use App\Models\Image;
 class CarsController extends Controller
 {
     public function index(){
-        $products = Car::all();
+        $products = Car::getAllCar();
         return view('car.index',compact('products'));
     }
 
     public function create()
     {
         $products = Car::all();
-        return view('car.create',compact('products'));
+        $brand=Brand::get();
+        $category=Category::get();
+        return view('car.create',compact('products'))->with('categories',$category)->with('brands',$brand);;
         //$brand=Brand::get();
         //$category=Category::where('is_parent',1)->get();
         // return $category;
@@ -31,8 +33,19 @@ class CarsController extends Controller
     public function store(Request $req){
         $data = $req->validate([
             'title'=>'required',
-            'price'=>'required'
+            'cat_id'=>'required|exists:categories,id',
+            'brand_id'=>'nullable|exists:brands,id',
+            'price'=>'required',
+            'summary'=>'string|required',
+            'description'=>'string|nullable',
+            'status'=>'required|in:active,inactive',
         ]);
+        $slug=Str::slug($req->title);
+        $count=Car::where('slug',$slug)->count();
+        if($count>0){
+            $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
+        }
+        $data['slug']=$slug;
         $new_product = Car::create($data);
         if($req->has('images')){
             foreach($req->file('images')as $image){

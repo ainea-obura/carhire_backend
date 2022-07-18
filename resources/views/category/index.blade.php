@@ -21,8 +21,6 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
-              <th>Is Parent</th>
-              <th>Parent Category</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -32,8 +30,6 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
-              <th>Is Parent</th>
-              <th>Parent Category</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -49,14 +45,7 @@
                 <tr>
                     <td>{{$category->id}}</td>
                     <td>{{$category->title}}</td>
-                    <td>{{$category->slug}}</td>
-                    <td>{{(($category->is_parent==1)? 'Yes': 'No')}}</td>
-                    <td>
-                        @foreach($parent_cats as $parent_cat)
-                            {{$parent_cat->title}}
-                        @endforeach
-                    </td>
-             
+                    <td>{{$category->slug}}</td>          
                     <td>
                         @if($category->status=='active')
                             <span class="badge badge-success">{{$category->status}}</span>

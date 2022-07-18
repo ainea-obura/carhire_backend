@@ -18,27 +18,28 @@ class Car extends Model
     public function cat_info(){
         return $this->hasOne('App\Models\Car','id','cat_id');
     }
-    public function sub_cat_info(){
-        return $this->hasOne('App\Models\Car','id','child_cat_id');
+
+    public function brand_info(){
+        return $this->hasOne('App\Models\Car','id','brand_id');
     }
 
-    public static function getAllProduct(){
-        return Car::with(['cat_info','sub_cat_info'])->orderBy('id','desc')->paginate(10);
+    public static function getAllCar(){
+        return Car::with(['cat_info', 'brand_info'])->orderBy('id','desc')->paginate(10);
     }
 
     public function rel_prods(){
-        return $this->hasMany('App\Models\Product','cat_id','cat_id')->where('status','active')->orderBy('id','DESC')->limit(8);
+        return $this->hasMany('App\Models\Car','cat_id','cat_id')->where('status','active')->orderBy('id','DESC')->limit(8);
     }
     public function getReview(){
-        return $this->hasMany('App\Models\ProductReview','product_id','id')->with('user_info')->where('status','active')->orderBy('id','DESC');
+        return $this->hasMany('App\Models\CarReview','product_id','id')->with('user_info')->where('status','active')->orderBy('id','DESC');
     }
     public static function getProductBySlug($slug){
         return Car::with(['cat_info','rel_prods','getReview'])->where('slug',$slug)->first();
     }
     public static function countActiveProduct(){
-        $data=Car::where('status','active')->count();
-        if($data){
-            return $data;
+        $product=Car::where('status','active')->count();
+        if($product){
+            return $product;
         }
         return 0;
     }
