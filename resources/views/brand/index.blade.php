@@ -20,6 +20,7 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
+              <th>Logo</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -29,6 +30,7 @@
               <th>S.N.</th>
               <th>Title</th>
               <th>Slug</th>
+              <th>Logo</th>
               <th>Status</th>
               <th>Action</th>
               </tr>
@@ -39,6 +41,10 @@
                     <td>{{$brand->id}}</td>
                     <td>{{$brand->title}}</td>
                     <td>{{$brand->slug}}</td>
+                    <td>
+                      {{--<img src="{{$brand->logo}}" class="img-fluid" style="max-width:80px" alt="{{$brand->logo}}">--}}
+                      <img src="{{ asset($brand->logo) }}" width= '50' height='50' class="img img-responsive" />
+                    </td>
                     <td>
                         @if($brand->status=='active')
                             <span class="badge badge-success">{{$brand->status}}</span>

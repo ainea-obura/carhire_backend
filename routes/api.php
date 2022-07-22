@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HireController;
+use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,14 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::get('/hire/{id}', [HireController::class, 'show']); // get single hire
     Route::put('/hire/{id}', [HireController::class, 'update']); // update hire
     Route::delete('/hire/{id}', [HireController::class, 'destroy']); // delete hire
+    //Route::get('/brand',[BrandController::class, 'show']);
+
+    //brand
+  
+
+    Route::resource('/car','App\Http\Controllers\CarsController');
 
 });
+Route::get('/brand/{id}',[BrandController::class, 'show']); //get single brand
+Route::get('/brands',[BrandController::class, 'display']);
 

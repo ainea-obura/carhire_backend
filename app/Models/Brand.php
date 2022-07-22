@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Brand extends Model
 {
     use HasFactory;
-    protected $fillable=['title','slug','status'];
+    protected $guarded=[];
+    //protected $fillable=['title','slug','logo','status'];
 
     public function cars(){
         return $this->hasMany('App\Models\Car','brand_id','id')->where('status','active');
