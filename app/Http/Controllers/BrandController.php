@@ -24,8 +24,16 @@ class BrandController extends Controller
     {
         $this->validate($request,[
             'title'=>'string|required',
+            //'file' => 'mimes:jpeg,bmp,png'
         ]);
+         // When we have a file we will parse it
+        
         $data=$request->all();
+        $fileName = time().$request->file('logo')->getClientOriginalName();
+        $path = $request->file('logo')->storeAs('logo', $fileName, 'public');
+        $data["logo"] = '/storage/'.$path;
+        
+        
         $slug=Str::slug($request->title);
         $count=Brand::where('slug',$slug)->count();
         if($count>0){
@@ -43,9 +51,14 @@ class BrandController extends Controller
         return redirect()->route('brand.index');
     }
 
+    public function display()
+    {
+        return Brand::all();
+    }
+
     public function show($id)
     {
-        //
+        return Brand::find($id);
     }
 
     public function edit($id)
