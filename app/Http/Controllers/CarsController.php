@@ -69,14 +69,14 @@ class CarsController extends Controller
 
     public function display(){
         return response([
-            'cars' => Car::orderBy('created_at', 'desc')->get()
+            'cars' => Car::orderBy('created_at', 'desc')->with('images')->get()
         ],200);
     }
 
     public function show($id)
     {
         return response([
-            'car' => Car::where('id', $id)->get()
+            'car' => Car::where('id', $id)->with('images')->get()
         ],200);
     }
 }
