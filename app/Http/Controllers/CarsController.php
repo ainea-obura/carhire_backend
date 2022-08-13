@@ -66,4 +66,17 @@ class CarsController extends Controller
         $images = $product->images;
         return view('car.images',compact('product','images'));
     }
+
+    public function display(){
+        return response([
+            'cars' => Car::orderBy('created_at', 'desc')->get()
+        ],200);
+    }
+
+    public function show($id)
+    {
+        return response([
+            'car' => Car::where('id', $id)->get()
+        ],200);
+    }
 }

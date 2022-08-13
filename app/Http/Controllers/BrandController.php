@@ -53,12 +53,18 @@ class BrandController extends Controller
 
     public function display()
     {
-        return Brand::all();
+        //return Brand::all();
+        return response([
+            'brands' => Brand::orderBy('created_at', 'desc')->get()
+        ],200);
     }
 
     public function show($id)
     {
-        return Brand::find($id);
+        //return Brand::find($id);
+        return response([
+            'brand' => Brand::where('id', $id)->get()
+        ],200);
     }
 
     public function edit($id)
