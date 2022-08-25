@@ -68,6 +68,8 @@ class CarsController extends Controller
     }
 
     public function display(){
+        //return Car::all()->with('images');
+        
         return response([
             'cars' => Car::orderBy('created_at', 'desc')->with('images')->get()
         ],200);
@@ -75,6 +77,7 @@ class CarsController extends Controller
 
     public function show($id)
     {
+        //return Car::find($id);
         return response([
             'car' => Car::where('id', $id)->with('images')->get()
         ],200);
