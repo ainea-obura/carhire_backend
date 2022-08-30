@@ -30,6 +30,7 @@
                                 <th>Summary</th>
                                 <th>Description</th>
                                 <th>Status</th>
+                                <th>thumbnail</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -63,6 +64,10 @@
                                     <td>{{ $product->summary }}</td>
                                     <td>{{ $product->description }}</td>
                                     <td>{{ $product->status }}</td>
+                                    <td>
+                                        {{--<img src="{{$brand->logo}}" class="img-fluid" style="max-width:80px" alt="{{$brand->logo}}">--}}
+                                        <img src="{{ asset($product->thumbnail) }}" width= '50' height='50' class="img img-responsive" />
+                                      </td>
                                     <td>
                                         <a href="{{ route('car.edit', $product->id) }}"
                                             class="btn btn-primary btn-sm float-left mr-1"

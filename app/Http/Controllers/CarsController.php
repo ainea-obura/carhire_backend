@@ -46,6 +46,14 @@ class CarsController extends Controller
             $slug=$slug.'-'.date('ymdis').'-'.rand(0,999);
         }
         $data['slug']=$slug;
+        if($req->hasfile('thumbnail'))
+        {
+            $fileName = time().$req->file('thumbnail')->getClientOriginalName();
+            $path = $req->file('thumbnail')->storeAs('thumbnail', $fileName, 'public');
+            $data["thumbnail"] = '/storage/'.$path;
+
+        }
+
         $new_product = Car::create($data);
         if($req->has('images')){
             foreach($req->file('images')as $image){
@@ -57,7 +65,8 @@ class CarsController extends Controller
                 ]);
             }
         }
-        return back()->with('success','Added');
+        //return back()->with('success','Added');
+        return redirect()->route('car.index');
     }
 
     public function images($id){
