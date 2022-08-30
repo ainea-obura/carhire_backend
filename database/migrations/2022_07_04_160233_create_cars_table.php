@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('summary');
             $table->longText('description')->nullable();
             $table->enum('status',['active','inactive'])->default('inactive');
+            $table->string('thumbnail');
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('SET NULL');
             $table->foreign('cat_id')->references('id')->on('categories')->onDelete('SET NULL');
             $table->timestamps();

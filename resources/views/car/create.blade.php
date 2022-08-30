@@ -91,6 +91,11 @@
                         @enderror
                     </div>
 
+                    <div class="form-group">
+                        <label for="files" class="form-label mt-4">Upload thumbnail:</label>
+                        <input class="form-control" name="thumbnail" type="file" id="thumbnail">
+                    </div>
+
                     <div class="mt-4">
                         <button type="submit" class="btn btn-primary">Save Car</button>
                     </div>
