@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('hires', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->date('pickup_date');
-            $table->time('pickup_time');
-            $table->date('dropoff_date');
-            $table->time('dropoff_time');
-            $table->timestamps();
+                $table->integer('user_id');
+                $table->unsignedBigInteger('car_id');
+                $table->date('start');
+                $table->date('end');
+                $table->string('days');
+                $table->string('total_amnt');
+                $table->foreign('car_id')->references('id')->on('cars')->onDelete('SET NULL');
+                $table->timestamps();
         });
     }
 

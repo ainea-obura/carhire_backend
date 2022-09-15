@@ -65,17 +65,17 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="summary" class="col-form-label">Summary <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="summary" name="summary">{{ old('summary') }}</textarea>
-                        @error('summary')
+                        <label for="year" class="col-form-label">Y.O.M <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="year" name="year">{{ old('year') }}</textarea>
+                        @error('year')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
     
                     <div class="form-group">
-                        <label for="description" class="col-form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
-                        @error('description')
+                        <label for="seats" class="col-form-label">Seats</label>
+                        <textarea class="form-control" id="seats" name="seats">{{ old('seats') }}</textarea>
+                        @error('seats')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -120,15 +120,15 @@
 
         $(document).ready(function() {
             $('#summary').summernote({
-                placeholder: "Write short description.....",
+                placeholder: "Write short seats.....",
                 tabsize: 2,
                 height: 100
             });
         });
 
         $(document).ready(function() {
-            $('#description').summernote({
-                placeholder: "Write detail description.....",
+            $('#seats').summernote({
+                placeholder: "Write detail seats.....",
                 tabsize: 2,
                 height: 150
             });

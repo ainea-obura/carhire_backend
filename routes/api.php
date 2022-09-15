@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Hire
-    Route::get('/hire', [HireController::class, 'index']); // all hires
+    Route::get('/hires', [HireController::class, 'index']); // all hires
     Route::post('/hire', [HireController::class, 'store']); // create hire
     Route::get('/hire/{id}', [HireController::class, 'show']); // get single hire
     Route::put('/hire/{id}', [HireController::class, 'update']); // update hire
