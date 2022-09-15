@@ -27,8 +27,8 @@
                                 <th>Price</th>
                                 <th>Total Images</th>
                                 <th>View Image</th>
-                                <th>Summary</th>
-                                <th>Description</th>
+                                <th>Y.O.M</th>
+                                <th>Seats</th>
                                 <th>Status</th>
                                 <th>thumbnail</th>
                                 <th>Action</th>
@@ -61,8 +61,8 @@
                                         <a href={{ route('car.images', $product->id) }}
                                             class="btn btn-outline-dark">View</a>
                                     </td>
-                                    <td>{{ $product->summary }}</td>
-                                    <td>{{ $product->description }}</td>
+                                    <td>{{ $product->year }}</td>
+                                    <td>{{ $product->seats }}</td>
                                     <td>{{ $product->status }}</td>
                                     <td>
                                         {{--<img src="{{$brand->logo}}" class="img-fluid" style="max-width:80px" alt="{{$brand->logo}}">--}}

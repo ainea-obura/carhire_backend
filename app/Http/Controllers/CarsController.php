@@ -36,8 +36,8 @@ class CarsController extends Controller
             'cat_id'=>'required|exists:categories,id',
             'brand_id'=>'nullable|exists:brands,id',
             'price'=>'required',
-            'summary'=>'string|required',
-            'description'=>'string|nullable',
+            'year'=>'numeric|required',
+            'seats'=>'numeric|nullable',
             'status'=>'required|in:active,inactive',
         ]);
         $slug=Str::slug($req->title);
@@ -91,4 +91,62 @@ class CarsController extends Controller
             'car' => Car::where('id', $id)->with('images')->get()
         ],200);
     }
+
+    public function edit($id)
+    {
+        $brand=Brand::get();
+        $product=Car::findOrFail($id);
+        $category=Category::get();
+        $items=Car::where('id',$id)->get();
+        // return $items;
+        return view('car.edit')->with('product',$product)
+                    ->with('brands',$brand)
+                    ->with('categories',$category)->with('items',$items);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $product=Car::findOrFail($id);
+        $this->validate($request,[
+            'title'=>'required',
+            'cat_id'=>'required|exists:categories,id',
+            'brand_id'=>'nullable|exists:brands,id',
+            'price'=>'required',
+            'year'=>'numeric|required',
+            'seats'=>'numeric|nullable',
+            'status'=>'required|in:active,inactive',
+        ]);
+
+        $data=$request->all();
+        return $data;
+        $status=$product->fill($data)->save();
+        if($status){
+            request()->session()->flash('success','Product Successfully updated');
+        }
+        else{
+            request()->session()->flash('error','Please try again!!');
+        }
+        return redirect()->route('car.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $product=Car::findOrFail($id);
+        $status=$product->delete();
+        
+        if($status){
+            request()->session()->flash('success','Product successfully deleted');
+        }
+        else{
+            request()->session()->flash('error','Error while deleting product');
+        }
+        return redirect()->route('car.index');
+    }
+
 }

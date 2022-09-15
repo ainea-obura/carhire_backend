@@ -1,4 +1,5 @@
 @extends('layouts.master')
+@section('content')
 
 <div class="card">
     <h5 class="card-header">Edit Brand</h5>

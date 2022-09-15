@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('cat_id')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
             $table->decimal('price',8,2);
-            $table->text('summary');
-            $table->longText('description')->nullable();
+            $table->string('year');
+            $table->string('seats')->nullable();
             $table->enum('status',['active','inactive'])->default('inactive');
             $table->string('thumbnail');
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('SET NULL');

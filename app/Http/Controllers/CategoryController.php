@@ -51,9 +51,9 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        $parent_cats=Category::where('is_parent',1)->get();
+        //$parent_cats=Category::where('is_parent',1)->get();
         $category=Category::findOrFail($id);
-        return view('category.edit')->with('category',$category)->with('parent_cats',$parent_cats);
+        return view('category.edit')->with('category',$category);
     }
 
     public function update(Request $request, $id)
@@ -62,7 +62,7 @@ class CategoryController extends Controller
         $category=Category::findOrFail($id);
         $this->validate($request,[
             'title'=>'string|required',
-            'summary'=>'string|nullable',
+            //'summary'=>'string|nullable',
             'status'=>'required|in:active,inactive',
         ]);
         $data= $request->all();
