@@ -10,11 +10,11 @@ class Hire extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        //'user_id',
         'start',
         'end',
-        'days',
-        'total_amnt',
+        //'days',
+        //'total_amnt',
     ];
 
     public function user()
