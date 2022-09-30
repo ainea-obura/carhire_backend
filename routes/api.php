@@ -36,8 +36,8 @@ Route::group(['middleware' => ['auth:api']], function() {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     // Hire
-    Route::get('/hires', [HireController::class, 'index']); // all hires
-    Route::post('/hire', [HireController::class, 'store']); // create hire
+    //Route::get('/hires', [HireController::class, 'index']); // all hires
+   // Route::post('/hire', [HireController::class, 'store']); // create hire
     Route::get('/hire/{id}', [HireController::class, 'show']); // get single hire
     Route::put('/hire/{id}', [HireController::class, 'update']); // update hire
     Route::delete('/hire/{id}', [HireController::class, 'destroy']); // delete hire
@@ -54,4 +54,7 @@ Route::get('/brands',[BrandController::class, 'display']);
 
 Route::get('/cars',[CarsController::class, 'display']);
 Route::get('/car/{id}', [CarsController::class, 'show']);
+
+Route::get('/hires', [HireController::class, 'index']); // all hires
+Route::post('/hire', [HireController::class, 'store']);
 
