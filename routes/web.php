@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\HireController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,4 +48,7 @@ Route::get('/file-manager',function(){
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+Route::get('/income',[HireController::class, 'incomeChart'])->name('hire.income');
+Route::get('/hire', [HireController::class, 'index'])->name('hire.index');
 
