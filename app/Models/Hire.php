@@ -10,16 +10,24 @@ class Hire extends Model
 {
     use HasFactory;
     protected $fillable = [
-        //'user_id',
+        'user_id',
+        'car_id',
         'start',
         'end',
         //'days',
-        //'total_amnt',
+        'amount',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public static function countActiveHire(){
+        $data=Hire::count();
+        if($data){
+            return $data;
+        }
+        return 0;
     }
     
 }
