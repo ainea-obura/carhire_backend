@@ -66,18 +66,24 @@
 
                     <div class="form-group">
                         <label for="year" class="col-form-label">Y.O.M <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="year" name="year">{{ old('year') }}</textarea>
-                        @error('year')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <input type="text" class="form-control @error('year') is-invalid @enderror " name="year"
+                            placeholder="year of manufacture">
+                        <span class="text-danger">
+                            @error('year')
+                                {{ $message }}
+                            @enderror
+                        </span>
                     </div>
     
                     <div class="form-group">
                         <label for="seats" class="col-form-label">Seats</label>
-                        <textarea class="form-control" id="seats" name="seats">{{ old('seats') }}</textarea>
-                        @error('seats')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <input type="text" class="form-control @error('seats') is-invalid @enderror " name="seats"
+                            placeholder="seats">
+                        <span class="text-danger">
+                            @error('seats')
+                                {{ $message }}
+                            @enderror
+                        </span>
                     </div>
 
                     <div class="form-group">
