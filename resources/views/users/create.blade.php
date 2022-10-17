@@ -15,6 +15,7 @@
         @enderror
         </div>
         
+        <div class="form-group">
         <label for="inputTitle" class="col-form-label">lname</label>
         <input id="inputTitle" type="text" name="lname" placeholder="Last name"  value="{{old('lname')}}" class="form-control">
         @error('name')
@@ -22,6 +23,7 @@
         @enderror
         </div>
 
+        <div class="form-group">
         <label for="inputTitle" class="col-form-label">phone</label>
         <input id="inputTitle" type="text" name="phone" placeholder="Phone number"  value="{{old('phone')}}" class="form-control">
         @error('name')

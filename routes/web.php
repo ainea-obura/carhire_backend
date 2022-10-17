@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\HireController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,3 +54,17 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 Route::get('/income',[HireController::class, 'incomeChart'])->name('hire.income');
 Route::get('/hire', [HireController::class, 'index'])->name('hire.index');
 
+Route::resource('/message','MessageController');
+Route::get('/message/five','MessageController@messageFive')->name('messages.five');
+
+//notification
+//Route::get('/notification/{id}',(NotificationController@show')->name('admin.notification');
+Route::get('/notification/{id}',[NotificationControlle::class,'show'])->name('admin.notification');
+Route::get('/notifications',[NotificationController::class, 'index'])->name('all.notification');
+Route::delete('/notification/{id}',[NotificationController::class, 'delete'])->name('notification.delete');
+
+Route::get('/profile',[HomeController::class, 'profile'])->name('admin-profile');
+Route::post('/profile/{id}',[HomeController::class,'profileUpdate'])->name('profile-update');
+
+Route::get('change-password', [HomeController::class,'changePassword'])->name('change.password.form');
+Route::post('change-password', [HomeController::class,'changPasswordStore'])->name('change.password');
