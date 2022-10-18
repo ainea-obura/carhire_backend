@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use DB;
 
-class UsersTableSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +24,6 @@ class UsersTableSeeder extends Seeder
                 'phone'=>'254716347332',
                 'password'=>Hash::make('admin@123'),
                 'role'=>'admin',
-                'status'=>'active'
             ),
             array(
                 'fname'=>'Obura',
@@ -31,7 +32,6 @@ class UsersTableSeeder extends Seeder
                 'phone'=>'254716347332',
                 'password'=>Hash::make('user@123'),
                 'role'=>'user',
-                'status'=>'active'
             ),
         );
 

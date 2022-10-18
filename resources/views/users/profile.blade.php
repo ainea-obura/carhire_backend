@@ -20,7 +20,7 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="image">
-                        <img class="card-img-top img-fluid roundend-circle mt-4" style="border-radius:50%;height:80px;width:80px;margin:auto;" src="{{asset('admin/img/avatar.png')}}" alt="profile picture">
+                        <img class="card-img-top img-fluid roundend-circle mt-4" style="border-radius:50%;height:80px;width:80px;margin:auto;" src="{{asset('admin/img/undraw_profile.svg')}}" alt="profile picture">
                     </div>
                     <div class="card-body mt-4 ml-2">
                       <h5 class="card-title text-left"><small><i class="fas fa-user"></i> {{$profile->fname}}</small></h5>
