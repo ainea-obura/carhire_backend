@@ -22,7 +22,7 @@ class HireController extends Controller
         $attrs = $request->validate([
             'car_id' => 'required',
             'start'=>'required|date|date_format:Y-m-d',
-            'end'=>'required|date|date_format:Y-m-d',
+            'end'=>'required|date|date_format:Y-m-d|after:start',
             //'days' => 'required',
             'amount' => 'string|required',
         ]);
@@ -44,6 +44,36 @@ class HireController extends Controller
             'message' => 'Hire created.',
             'hire' => $hire,
         ], 200);
+    }
+
+    public function show($id){
+        $hire = Hire::find($id);
+        return view('hire.show')->with('hire',$hire);
+    }
+
+    public function edit($id)
+    {
+        $hire=Hire::find($id);
+        return view('hire.edit')->with('hire',$hire);
+    }
+
+    public function destroy($id)
+    {
+        $hire=Hire::find($id);
+        if($hire){
+            $status=$order->delete();
+            if($status){
+                request()->session()->flash('success','Hire Successfully deleted');
+            }
+            else{
+                request()->session()->flash('error','Hire can not deleted');
+            }
+            return redirect()->route('hire.index');
+        }
+        else{
+            request()->session()->flash('error','Order can not found');
+            return redirect()->back();
+        }
     }
 
     // Income chart
