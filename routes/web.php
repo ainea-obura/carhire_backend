@@ -53,6 +53,9 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 
 Route::get('/income',[HireController::class, 'incomeChart'])->name('hire.income');
 Route::get('/hire', [HireController::class, 'index'])->name('hire.index');
+Route::get('/hire/show/{id}',[HomeController::class, "show"])->name('hire.show');
+Route::get('/hire/edit/{id}',[HomeController::class, "edit"])->name('hire.edit');
+Route::delete('/hire/delete/{id}',[HomeController::class, 'destroy'])->name('hire.destroy');
 
 Route::resource('/message','MessageController');
 Route::get('/message/five','MessageController@messageFive')->name('messages.five');
