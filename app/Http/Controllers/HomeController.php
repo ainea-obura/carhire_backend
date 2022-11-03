@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $record = User::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(created_at) as day_name"), \DB::raw("DAY(created_at) as day"))
+        /*$record = User::select(\DB::raw("COUNT(*) as count"), \DB::raw("DAYNAME(created_at) as day_name"), \DB::raw("DAY(created_at) as day"))
         ->where('created_at', '>', Carbon::today()->subDay(6))
         ->groupBy('day_name','day')
         ->orderBy('day')
@@ -40,6 +40,8 @@ class HomeController extends Controller
             $data['data'][] = (int) $row->count;
         }
  
+        $data['chart_data'] = json_encode($data);*/
+        $data = User::get();
         $data['chart_data'] = json_encode($data);
         return view('home', $data);
     

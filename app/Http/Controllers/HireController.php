@@ -28,6 +28,36 @@ class HireController extends Controller
         ]);
 
         //$image = $this->saveImage($request->image, 'posts');
+        
+        //$car = Car::findorFail($id);
+
+        /*$date = DB::table('hires')
+         ->where('car_id', '=', $request->get(''))
+         ->value('id');
+    
+        $date = Hire::where('car_id', $car->id)->get();
+        if ($date){
+            if($date['start'] >= $attrs['start'] && $date['end']<= $attrs['end']){
+                return back()->with('selected day already booked');
+            }
+        }
+        else{
+            $hire = Hire::create([
+                'user_id' => auth()->user()->id,
+                'car_id' => $attrs['car_id'],
+                'start' =>$attrs['start'],
+                'end' =>$attrs['end'],
+                'amount' => $attrs['amount'],
+                //'days' => $attrs['days'],
+                //'image' => $image
+            ]);
+
+            return response([
+                'message' => 'Hire created.',
+                'hire' => $hire,
+            ], 200);
+        }*/
+        
 
         $hire = Hire::create([
             'user_id' => auth()->user()->id,
@@ -74,6 +104,13 @@ class HireController extends Controller
             request()->session()->flash('error','Order can not found');
             return redirect()->back();
         }
+    }
+
+    public function view($id)
+    {
+        return response([
+            'hire' => Hire::where('id', $id)->get()
+        ],200);
     }
 
     // Income chart
