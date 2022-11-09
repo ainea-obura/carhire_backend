@@ -29,5 +29,7 @@ class Hire extends Model
         }
         return 0;
     }
+
+    //public function checkDate()
     
 }
