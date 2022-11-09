@@ -8,6 +8,7 @@ use App\Models\Hire;
 use App\Models\User;
 use App\Models\Car;
 use Carbon\Carbon;
+use DB;
 
 class HireController extends Controller
 {
@@ -16,6 +17,8 @@ class HireController extends Controller
         return view('hire.index')->with('hire',$hire);
     }
     
+   
+
     public function store(Request $request)
     {
         //validate fields
@@ -27,21 +30,21 @@ class HireController extends Controller
             'amount' => 'string|required',
         ]);
 
-        //$image = $this->saveImage($request->image, 'posts');
-        
-        //$car = Car::findorFail($id);
-
-        /*$date = DB::table('hires')
-         ->where('car_id', '=', $request->get(''))
-         ->value('id');
-    
-        $date = Hire::where('car_id', $car->id)->get();
-        if ($date){
-            if($date['start'] >= $attrs['start'] && $date['end']<= $attrs['end']){
-                return back()->with('selected day already booked');
-            }
+        $isBooked = DB::table('hires')
+        //->where('car_id', request('car_id'))
+        ->where('car_id', $attrs['car_id'])
+        ->whereDate('start', '<=', $attrs['start'])
+        ->whereDate('end', '>=', $attrs['end'])
+        ->exists();
+        if($isBooked){
+            //booking exists at selected time for the given car
+            return response([
+                'message' => 'Slot Not Available',
+            ], 401);
         }
-        else{
+     
+        else
+        {
             $hire = Hire::create([
                 'user_id' => auth()->user()->id,
                 'car_id' => $attrs['car_id'],
@@ -51,15 +54,16 @@ class HireController extends Controller
                 //'days' => $attrs['days'],
                 //'image' => $image
             ]);
-
+    
+    
             return response([
                 'message' => 'Hire created.',
                 'hire' => $hire,
-            ], 200);
-        }*/
+            ], 200); 
+        }
         
 
-        $hire = Hire::create([
+       /* $hire = Hire::create([
             'user_id' => auth()->user()->id,
             'car_id' => $attrs['car_id'],
             'start' =>$attrs['start'],
@@ -73,8 +77,11 @@ class HireController extends Controller
         return response([
             'message' => 'Hire created.',
             'hire' => $hire,
-        ], 200);
+        ], 200);*/
     }
+
+
+    
 
     public function show($id){
         $hire = Hire::find($id);
