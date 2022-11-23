@@ -63,7 +63,7 @@ class HireController extends Controller
         }
         
 
-       /* $hire = Hire::create([
+        /*$hire = Hire::create([
             'user_id' => auth()->user()->id,
             'car_id' => $attrs['car_id'],
             'start' =>$attrs['start'],
@@ -120,6 +120,13 @@ class HireController extends Controller
         ],200);
     }
 
+    public function my_hire($id)
+    {
+        return response([
+            'hire' => Hire::where('user_id', $id)->get()
+        ],200);
+    }
+
     // Income chart
     public function incomeChart(Request $request){
         $year=\Carbon\Carbon::now()->year;
@@ -130,7 +137,7 @@ class HireController extends Controller
             });
             // dd($items);
         $result=[];
-        foreach($hire as $month=>$ihire){
+        foreach($hire as $month=>$hire){
             foreach($ihire as $hire){
                 $amount=$hire->sum('amount');
                 // dd($amount);
