@@ -12,7 +12,14 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <!--<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>-->
+                            <div 
+                            class="col-lg-6 d-none d-lg-block bg-image"
+                            style="
+                            background-image: url('https://images.unsplash.com/photo-1532974297617-c0f05fe48bff?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'); 
+                            
+                            "
+                            ></div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">

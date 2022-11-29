@@ -122,6 +122,9 @@ class HireController extends Controller
 
     public function my_hire($id)
     {
+        $car=DB::table('cars')->where('id',$id->hire_id)->pluck('thumbnail');
+        //$thumbnail=Car::where('id',$order_data['shipping_id'])->pluck('price');
+        
         return response([
             'hire' => Hire::where('user_id', $id)->get()
         ],200);
